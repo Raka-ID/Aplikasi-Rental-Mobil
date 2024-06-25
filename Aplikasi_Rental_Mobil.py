@@ -137,7 +137,7 @@ def kendaraan_nopol(suatu_nopol):
         if cari:
             break       # Menghentikan Loop paling luar
     if not cari:
-        print(f"Kendaraan dengan nomor polisi \'{suatu_nopol}\' tidak ditemukan.\n")
+        print(f"Kendaraan dengan nomor polisi \'{input_mentah}\' tidak ditemukan.\n")
 
 def filter_merk(suatu_merk):
     if suatu_merk in Rental.keys():
@@ -179,13 +179,43 @@ def tambah_kendaraan(suatu_nopol):
     # Menambahkan Kendaraan Baru
     if not cek:
         print(f"Kendaraan dengan nomor polisi \'{suatu_nopol}\' belum ada di dalam daftar")
-        input_merk = input('Masukkan merk kendaraan: ').capitalize()
+
+        # Input Merk
+        while True:
+            input_merk = input('Masukkan merk kendaraan: ').capitalize()
+            # Batasan (Merk tidak boleh angka)
+            if input_merk.isdigit():
+                print('Merk yang anda masukkan berupa angka.\n')
+            elif input_merk.isalnum():
+                if input_merk.isalpha():
+                    break
+                else:
+                    print('Merk yang anda masukkan mengandung angka.\n')
+            else:
+                break
+        
+        # Input Model
         input_model = input('Masukkan model kendaraan: ')
+
+        # Input Tahun Produksi
         while True:
             try:
                 input_tahun = int(input('Masukkan tahun produksi kendaraan dalam angka: '))
+                if input_tahun > 0:
+                    break
+                else:
+                    print('Tolong Masukkan dalam bilangan bulat positif.\n')
+            except:
+                print('Tolong masukkan dalam bentuk angka.\n')
+        
+        # Input Harga Sewa
+        while True:
+            try:
                 input_price = int(input('Masukkan harga sewa kendaraan dalam angka: '))
-                break
+                if input_price > 0:
+                    break
+                else:
+                    print('Tolong Masukkan dalam bilangan bulat positif.\n')
             except:
                 print('Tolong masukkan dalam bentuk angka')
         print()
@@ -251,18 +281,30 @@ def perbarui_kendaraan(suatu_nopol):
                         if menu_3_1 == 'y':
                             print('\t====Pilihan Kolom====\n\t1. Merk\n\t2. Model\n\t3. Nopol (No. Polisi)\n\t4. Tahun (Produksi)\n\t5. Harga (Sewa)\n')
                             input_column = input('Masukkan kolom yang datanya ingin diperbarui (1-5): ').lower()
-                            input_data = input('Masukkan data yang akan diperbarui: ')
                             print()
 
                             # Perbaruan Data pada Kolom Merk
                             if input_column == '1' or input_column == 'merk':
+                                while True:
+                                    input_merk = input('Masukkan merk kendaraan: ').capitalize()
+                                    # Batasan (Merk tidak boleh angka)
+                                    if input_merk.isdigit():
+                                        print('Merk yang anda masukkan berupa angka.\n')
+                                    elif input_merk.isalnum():
+                                        if input_merk.isalpha():
+                                            break
+                                        else:
+                                            print('Merk yang anda masukkan mengandung angka.\n')
+                                    else:
+                                        break
+
                                 while True:     # Menghindari inputan selain 'y' atau 'n'
-                                    print(f'Kolom \'Merk\' kendaraan dengan No. Polisi \'{suatu_nopol}\' akan diperbarui menjadi \'{input_data}\'')
+                                    print(f'Kolom \'Merk\' kendaraan dengan No. Polisi \'{suatu_nopol}\' akan diperbarui menjadi \'{input_merk}\'')
                                     yn = input('Konfirmasi (y/n): ').lower()
                                     print()
                                     if yn == 'y':
-                                        Rental[merk][model].pop(suatu_nopol) #CEK
-                                        Rental[input_data].update({model: {suatu_nopol:{'Tahun': year, 'Price': price}}})
+                                        Rental[merk][model].pop(suatu_nopol)
+                                        Rental[input_merk].update({model: {suatu_nopol:{'Tahun': year, 'Price': price}}})
                                         print('BERHASIL perbarui data kendaraan.\n')
                                         break
                                     elif yn == 'n':
@@ -274,11 +316,12 @@ def perbarui_kendaraan(suatu_nopol):
                             # Perbaruan Data pada Kolom Model
                             elif input_column == '2' or input_column == 'model':
                                 while True:
-                                    print(f'Kolom \'Model\' kendaraan dengan No. Polisi \'{suatu_nopol}\' akan diperbarui menjadi \'{input_data}\'')
+                                    input_model = input('Masukkan model kedaraan: ')
+                                    print(f'Kolom \'Model\' kendaraan dengan No. Polisi \'{suatu_nopol}\' akan diperbarui menjadi \'{input_model}\'')
                                     yn = input('Konfirmasi (y/n): ').lower()
                                     print()
                                     if yn == 'y':
-                                        input_model_2 = input_data.capitalize()
+                                        input_model_2 = input_model.capitalize()
                                         Rental[merk][model].pop(suatu_nopol)
                                         Rental[merk][input_model_2] = {suatu_nopol:{'Tahun': year, 'Price': price}}
                                         print('BERHASIL perbarui data kendaraan.\n')
@@ -291,14 +334,27 @@ def perbarui_kendaraan(suatu_nopol):
 
                             # Perbaruan Data pada Kolom No. Polisi
                             elif input_column == '3' or input_column == 'nopol' or input_column == 'no. polisi':
+                                # Cek penulisan nomor polisi
+                                while True:
+                                    input_mentah = input('Masukkan nomor polisi kendaraan baru: ').upper()
+                                    print()
+                                    if len(input_mentah) < 7 or input_mentah[0].isdigit():
+                                        print('Tolong masukkan nomor polisi kendaraan sesuai standar penulisan.')
+                                        print('Note: nomor polisi custom tidak dapat ditambahkan.\n')
+                                    else:
+                                        input_nopol = format_nopol(input_mentah)
+                                        if input_nopol == None:
+                                            print('Note: nomor polisi custom tidak dapat ditambahkan.\n')
+                                            break
+                                        else:
+                                            break
                                 # Cek bila ada duplikat pada No. Polisi (harus unik)
-                                input_nopol_2 = format_nopol(input_data.upper())
                                 cek = False
                                 for merk, models in Rental.items():
                                     for model, Nopol in models.items():
                                         for nopol, details in Nopol.items():
-                                            if nopol == input_nopol_2:
-                                                print(f'Kendaraan dengan nomor polisi \'{input_nopol_2}\' sudah ada dalam daftar\n')
+                                            if nopol == input_nopol:
+                                                print(f'Kendaraan dengan nomor polisi \'{input_nopol}\' sudah ada dalam daftar\n')
                                                 cek = True
                                                 break
                                         if cek:
@@ -306,10 +362,10 @@ def perbarui_kendaraan(suatu_nopol):
                                     if cek:
                                         break
 
-                                # Menambahkan Kendaraan Baru
+                                # Menambahkan Kendaraan Baru pada Kolom Polisi
                                 if not cek:
                                     while True:
-                                        print(f'Kolom \'No. Polisi\' kendaraan dengan No. Polisi \'{suatu_nopol}\' akan diperbarui menjadi \'{input_nopol_2}\'')
+                                        print(f'Kolom \'No. Polisi\' kendaraan dengan No. Polisi \'{suatu_nopol}\' akan diperbarui menjadi \'{input_nopol}\'')
                                         yn = input('Konfirmasi (y/n): ').lower()
                                         print()
                                         if yn == 'y':
@@ -319,7 +375,7 @@ def perbarui_kendaraan(suatu_nopol):
                                                     for nopol, details in Nopol.items():
                                                         if nopol == suatu_nopol:
                                                             Rental[merk][model].pop(suatu_nopol)
-                                                            Rental[merk][model].update({input_nopol_2:{'Tahun': year, 'Price': price}})
+                                                            Rental[merk][model].update({input_nopol:{'Tahun': year, 'Price': price}})
                                                             print('BERHASIL perbarui data kendaraan.\n')
                                                             cek = True
                                                             break
@@ -337,11 +393,23 @@ def perbarui_kendaraan(suatu_nopol):
                             # Perbaruan Data pada Kolom Tahun
                             elif input_column == '4' or input_column == 'tahun' or input_column == 'tahun produksi' or input_column == 'produksi':
                                 while True:
-                                    print(f'Kolom \'Tahun\' kendaraan dengan No. Polisi \'{suatu_nopol}\' akan diperbarui menjadi \'{input_data}\'')
+                                    
+                                    # Input Tahun harus bilangan bulat positif
+                                    while True:
+                                        try:
+                                            input_tahun = int(input('Masukkan tahun produksi kendaraan dalam angka: '))
+                                            if input_tahun > 0:
+                                                break
+                                            else:
+                                                print('Tolong Masukkan dalam bilangan bulat positif.\n')
+                                        except:
+                                            print('Tolong masukkan dalam bentuk angka.\n')
+
+                                    print(f'Kolom \'Tahun\' kendaraan dengan No. Polisi \'{suatu_nopol}\' akan diperbarui menjadi \'{input_tahun}\'')
                                     yn = input('Konfirmasi (y/n): ').lower()
                                     print()
                                     if yn == 'y':
-                                        Rental[merk][model][suatu_nopol].update({'Tahun': int(input_data)})
+                                        Rental[merk][model][suatu_nopol].update({'Tahun': input_tahun})
                                         print('BERHASIL perbarui data kendaraan.')
                                         break
                                     elif yn == 'n':
@@ -353,11 +421,23 @@ def perbarui_kendaraan(suatu_nopol):
                             # Perbaruan Data pada Kolom Harga Sewa (Price)
                             elif input_column == '5' or input_column == 'harga' or input_column == 'harga sewa' or input_column == 'sewa':
                                 while True:
-                                    print(f'Kolom \'Harga Sewa\' kendaraan dengan No. Polisi \'{suatu_nopol}\' akan diperbarui menjadi \'{input_data}\'')
+
+                                    # Input Harga Sewa harus bilangan bulat positif
+                                    while True:
+                                        try:
+                                            input_price = int(input('Masukkan harga sewa kendaraan dalam angka: '))
+                                            if input_price > 0:
+                                                break
+                                            else:
+                                                print('Tolong Masukkan dalam bilangan bulat positif.\n')
+                                        except:
+                                            print('Tolong masukkan dalam bentuk angka')
+
+                                    print(f'Kolom \'Harga Sewa\' kendaraan dengan No. Polisi \'{suatu_nopol}\' akan diperbarui menjadi \'{input_price}\'')
                                     yn = input('Konfirmasi (y/n): ').lower()
                                     print()
                                     if yn == 'y':
-                                        Rental[merk][model][suatu_nopol].update({'Price': int(input_data)})
+                                        Rental[merk][model][suatu_nopol].update({'Price': input_price})
                                         print('BERHASIL perbarui data kendaraan.\n')
                                         break
                                     elif yn == 'n':
@@ -469,9 +549,15 @@ while True:
 
             # Submenu 2 (Kendaraan Tertentu Berdasarkan No. Polisi [Primary Key])
             elif menu_1 == '2':
-                input_nopol = format_nopol(input('Masukkan Nomor Polisi kendaraan yang hendak ditampilkan: ').upper())
-                print()
-                kendaraan_nopol(input_nopol)
+                while True:
+                    input_mentah = input('Masukkan Nomor Polisi kendaraan yang hendak ditampilkan: ').upper()
+                    print()
+                    if len(input_mentah) < 7 or input_mentah[0].isdigit():
+                        print('Tolong masukkan nomor polisi kendaraan sesuai standar penulisan.')
+                    else:
+                        input_nopol = format_nopol(input_mentah)
+                        kendaraan_nopol(input_nopol)
+                        break
 
         #------------------------------------------------------------------------------
             # Submenu 3 (Filter Berdasarkan Merk Kendaraan)
@@ -499,22 +585,45 @@ while True:
 
             # Submenu 1 (Menambahkan 1 Kendaraan)
             if menu_2 == '1':
-                input_nopol = format_nopol(input('Masukkan Nomor Polisi kendaraan yang hendak ditambahkan: ').upper())
-                print()
-                tambah_kendaraan(input_nopol)
+                while True:
+                    input_mentah = input('Masukkan Nomor Polisi kendaraan yang hendak ditambahkan: ').upper()
+                    print()
+                    if len(input_mentah) < 7 or input_mentah[0].isdigit():
+                        print('Tolong masukkan nomor polisi kendaraan sesuai standar penulisan.')
+                        print('Note: nomor polisi custom tidak dapat ditambahkan.\n')
+                    else:
+                        input_nopol = format_nopol(input_mentah)
+                        if input_nopol == None:
+                            print('Note: nomor polisi custom tidak dapat ditambahkan.\n')
+                            break
+                        else:
+                            tambah_kendaraan(input_nopol)
+                            break
 
             # Submenu 2 (Menambahkan Kendaraan Lebih Dari 1 Sekaligus)
             elif menu_2 == '2':
-                
+
                 try:    # Memisahkan input selain angka
                     menu_2_2 = int(input('Berapa banyak kendaraan yang ingin dimasukkan: '))
                     print()
                     if menu_2_2 > 0:
                         for i in range(1, menu_2_2 + 1):
-                            input_nopol = format_nopol(input(f'Masukkan No. Polisi kendaraan ke-{i}: '))
-                            tambah_kendaraan(input_nopol)
+                            while True:
+                                input_mentah = input(f'Masukkan No. Polisi kendaraan ke-{i}: ').upper()
+                                print()
+                                if len(input_mentah) < 7 or input_mentah[0].isdigit():
+                                    print('Tolong masukkan nomor polisi kendaraan sesuai standar penulisan.')
+                                    print('Note: nomor polisi custom tidak dapat ditambahkan.\n')
+                                else:
+                                    input_nopol = format_nopol(input_mentah)
+                                    if input_nopol == None:
+                                        print('Note: nomor polisi custom tidak dapat ditambahkan.\n')
+                                        break
+                                    else:
+                                        tambah_kendaraan(input_nopol)
+                                        break
                 except:
-                    print('Invalid input. Tolong masukkan dalam angka: bilangan bulat positif\n')
+                    print('Invalid input. Input yang dimasukkan bukan berupa bilangan bulat positif\n')
 
             # Ke Menu Utama
             elif menu_2 == '3':
@@ -537,9 +646,20 @@ while True:
             if menu_3 == '1':
 
                 # Input Primary Key
-                input_nopol = format_nopol(input('Masukkan No. Polisi kendaraan yang ingin diperbarui: ').upper())
-                print()
-                perbarui_kendaraan(input_nopol)
+                while True:
+                    input_mentah = input('Masukkan Nomor Polisi kendaraan yang hendak diperbarui: ').upper()
+                    print()
+                    if len(input_mentah) < 7 or input_mentah[0].isdigit():
+                        print('Tolong masukkan nomor polisi kendaraan sesuai standar penulisan.')
+                        print('Note: nomor polisi custom tidak dapat ditambahkan.\n')
+                    else:
+                        input_nopol = format_nopol(input_mentah)
+                        if input_nopol == None:
+                            print('Note: nomor polisi custom tidak dapat ditambahkan.\n')
+                            break
+                        else:
+                            perbarui_kendaraan(input_nopol)
+                            break
 
             # Submenu 2 (Kembali ke Menu Utama)
             elif menu_3 == '2':
@@ -560,9 +680,21 @@ while True:
 
             # Submenu 1 (Hapus Data Kendaraan)
             if menu_4 == '1':
-                input_nopol = format_nopol(input('Masukkan No. Polisi kendaraan yang ingin diperbarui: ').upper())
-                print()
-                hapus_kendaraan(input_nopol)
+                while True:
+                    input_mentah = input('Masukkan Nomor Polisi kendaraan yang hendak dihapus: ').upper()
+                    print()
+                    if len(input_mentah) < 7 or input_mentah[0].isdigit():
+                        print('Tolong masukkan nomor polisi kendaraan sesuai standar penulisan.')
+                        print('Note: nomor polisi custom tidak ada di dalam daftar.\n')
+                    else:
+                        input_nopol = format_nopol(input_mentah)
+                        print()
+                        if input_nopol == None:
+                            print('Kendaraan yang anda cari tidak ada di dalam daftar kendaraan.\n')
+                            break
+                        else:
+                            hapus_kendaraan(input_nopol)
+                            break
 
             elif menu_4 == '2':
                 break
