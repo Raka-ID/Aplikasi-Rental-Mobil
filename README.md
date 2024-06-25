@@ -26,8 +26,8 @@ _Project_ ini merupakan implementasi program rental mobil meggunakan Python. Pro
 | 1 | Merk | `str` | - | Merk kendaraan |
 | 2 | Model | `str` | - | Model dari suatu merk kendaraan |
 | 3 | No. Polisi | `str` | min. 7 karakter | No. Polisi/plat nomor kendaraan (unik) |
-| 4 | Tahun | `int` | - | Tahun produksi kendaraan |
-| 5 | Harga Sewa | `int` | - | Harga sewa kendaraan perhari |
+| 4 | Tahun | `int` | > 0 | Tahun produksi kendaraan |
+| 5 | Harga Sewa | `int` | > 0 | Harga sewa kendaraan perhari (Rp) |
 
 ## Deskripsi Fitur
 ### Menu Utama
