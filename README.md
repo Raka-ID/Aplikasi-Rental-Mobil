@@ -17,6 +17,9 @@ _Project_ ini merupakan implementasi program rental mobil meggunakan Python. Pro
 - Mengurangi kesalahan administratif, serta meningkatkan transparansi dan akuntabilitas dalam pengelolaan sumber daya kendaraan.
 - Membantu dalam memfasilitasi proses penyewaan mobil oleh karyawan atau anggota perusahaan.
 
+## Batasan
+- __Standar penulisan nomor polisi__: Program ini hanya bisa digunakan pada kendaraan bernomor polisi standar, tidak bisa menggunakan nomor polisi _custom_
+
 ## _Data Description_
 | No | Nama Kolom | Type | Range | Deskripsi |
 | ------ | ------ | ---- | ----- | --------- |
@@ -25,9 +28,6 @@ _Project_ ini merupakan implementasi program rental mobil meggunakan Python. Pro
 | 3 | No. Polisi | `str` | min. 7 karakter | No. Polisi/plat nomor kendaraan (unik) |
 | 4 | Tahun | `int` | - | Tahun produksi kendaraan |
 | 5 | Harga Sewa | `int` | - | Harga sewa kendaraan perhari |
-
-## Batasan
-- __Standar penulisan nomor polisi__: Program ini hanya bisa digunakan pada kendaraan bernomor polisi standar, tidak bisa menggunakan nomor polisi _custom_
 
 ## Deskripsi Fitur
 ### Menu Utama
