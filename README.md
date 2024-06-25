@@ -2,17 +2,20 @@
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
 ### _Context_
-_Project_ ini merupakan implementasi program rental mobil emggunakan Python. Program ini memungkinkan pengguna untuk mencari dan menampilkan informasi detail kendaraan rental berdasarkan merk dan model. Aplikasi ini dibangun dengan tujuan memberikan kemudahan dalam mengakses data kendaraan rental suatu perusahaan.
+_Project_ ini merupakan implementasi program rental mobil meggunakan Python. Program ini memungkinkan pengguna untuk mencari dan menampilkan informasi detail kendaraan rental berdasarkan merk dan model. Aplikasi ini dibangun dengan tujuan memberikan kemudahan dalam mengakses data kendaraan rental suatu perusahaan.
 
 ## _Key Features_
-- Daftar seluruh kendaraan rental
-- Pencarian kendaraan berdasarkan nomor polisi kendaraan
-- Filter merk kendaraan
+- Daftar kendaraan rental
+- Pencarian kendaraan berdasarkan nomor polisi dan merk kendaraan
+- Manajemen Pengguna dari mulai tambah, perbarui, sampai ke hapus detail kendaraan
+
 
 ## _Objective_
-- Menyediakan pencarian informasi detail kendaraan
-- Memudahkan pengguna dalam mengakses setiap fitur di dalamnya
-- Membantu pengguna untuk mencari detail kendaraan secara efisien
+- Menyediakan pencarian informasi detail kendaraan secara efisien
+- Menyediakan sistem yang efisien dan mudah digunakan untuk mengelola inventaris mobil
+- Memudahkan pengguna dalam mengatur kendaraan rental
+- Mengurangi kesalahan administratif, serta meningkatkan transparansi dan akuntabilitas dalam pengelolaan sumber daya kendaraan.
+- Membantu dalam memfasilitasi proses penyewaan mobil oleh karyawan atau anggota perusahaan.
 
 ## _Data Description_
 | No | Nama Kolom | Type | Range | Deskripsi |
@@ -26,7 +29,7 @@ _Project_ ini merupakan implementasi program rental mobil emggunakan Python. Pro
 ## Batasan
 - __Standar penulisan nomor polisi__: Program ini hanya bisa digunakan pada kendaraan bernomor polisi standar, tidak bisa menggunakan nomor polisi _custom_
 
-## Fitur tersedia
+## Deskripsi Fitur
 ### Menu Utama
 Menu utama terdiri dari 5 submenu (CRUD): _Create, Read, Update, Delete_, dan _Exit_. Untuk keluar aplikasi pengguna dapat memilih submenu ke-5 'Keluar Aplikasi'.
 
